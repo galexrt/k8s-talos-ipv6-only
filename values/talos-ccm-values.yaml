@@ -1,0 +1,16 @@
+# Helm values talos-ccm.yaml
+enabledControllers:
+  - cloud-node
+  - node-ipam-controller
+
+extraArgs:
+  - --allocate-node-cidrs
+  - --cidr-allocator-type=CloudAllocator
+  - --node-cidr-mask-size-ipv6=80
+
+daemonSet:
+  enabled: true
+
+tolerations:
+  - effect: NoSchedule
+    operator: Exists

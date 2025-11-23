@@ -1,0 +1,107 @@
+cluster:
+  name: ${cluster_name}
+  id: ${cilium_cluster_id}
+
+k8sServiceHost: "localhost"
+k8sServicePort: "7445"
+
+ipv4:
+  enabled: false
+
+ipv6:
+  enabled: true
+
+routingMode: "native"
+
+kubeProxyReplacement: true
+kubeProxyReplacementHealthzBindAddr: "0.0.0.0:10256"
+
+bpf:
+  masquerade: false
+  hostLegacyRouting: false
+
+loadBalancer:
+  acceleration: "native"
+
+cni:
+  install: true
+
+ipam:
+  mode: "kubernetes"
+
+k8s:
+  requireIPv4PodCIDR: false
+  requireIPv6PodCIDR: true
+
+enableIPv6Masquerade: false
+enableIPv4Masquerade: false
+
+cgroup:
+  autoMount:
+    enabled: false
+  hostRoot: /sys/fs/cgroup
+
+securityContext:
+  privileged: true
+  capabilities:
+    ciliumAgent: ["CHOWN", "KILL", "NET_ADMIN", "NET_RAW", "IPC_LOCK", "SYS_ADMIN", "SYS_RESOURCE", "DAC_OVERRIDE", "FOWNER", "SETGID", "SETUID"]
+    cleanCiliumState: ["NET_ADMIN", "SYS_ADMIN", "SYS_RESOURCE"]
+
+encryption:
+  enabled: false
+
+operator:
+  replicas: 1
+  prometheus:
+    enabled: true
+
+ingressController:
+  enabled: false
+
+prometheus:
+  enabled: true
+
+hostPort:
+  enabled: true
+
+nodePort:
+  enabled: true
+
+hubble:
+  enabled: true
+
+  eventBufferCapacity: 2047
+  metrics:
+    enabled:
+      - "dns"
+      - "drop"
+      - "tcp"
+      - "flow"
+      - "port-distribution"
+      - "icmp"
+      - "httpV2:exemplars=true;labelsContext=source_ip,source_namespace,source_workload,destination_ip,destination_namespace,destination_workload,traffic_direction"
+    enableOpenMetrics: true
+
+  relay:
+    enabled: true
+    rollOutPods: true
+    prometheus:
+      enabled: true
+
+  redact:
+    enabled: true
+    http:
+      urlQuery: true
+      userInfo: true
+      allow:
+        - "traceparent"
+        - "tracestate"
+        - "Cache-Control"
+        - "Content-Type"
+        - "Content-Length"
+
+  ui:
+    enabled: true
+    rollOutPods: true
+    ingress:
+      enabled: false

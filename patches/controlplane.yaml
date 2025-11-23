@@ -1,0 +1,39 @@
+machine:
+  features:
+    kubernetesTalosAPIAccess:
+      enabled: true
+      allowedRoles:
+        - os:reader
+      allowedKubernetesNamespaces:
+        - kube-system
+cluster:
+  network:
+    cni:
+      name: none
+    podSubnets:
+      - "fd40:10::/96"
+    serviceSubnets:
+      - "fd40:10:100::/112"
+  controllerManager:
+    extraArgs:
+      bind-address: "::"
+      node-cidr-mask-size-ipv6: "112"
+      # Disable Node IPAM controller as we use Talos CCM for that
+      controllers: "*,-node-ipam-controller"
+  scheduler:
+    extraArgs:
+      bind-address: "::"
+  etcd:
+    extraArgs:
+      listen-metrics-urls: "http://[::]:2381"
+  inlineManifests:
+    - name: hcloud-secret
+      contents: |
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: hcloud
+          namespace: kube-system
+        type: Opaque
+        data:
+          token: "${base64encode(hcloudToken)}"

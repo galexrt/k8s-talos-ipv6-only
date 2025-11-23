@@ -1,0 +1,8 @@
+machine:
+  registries:
+    config: {}
+      # Example for ghcr.io (this will be rendered by Terraform):
+      #"ghcr.io":
+      #  auth:
+      #    username: ${ghcrUsername}
+      #    password: ${ghcrPassword}

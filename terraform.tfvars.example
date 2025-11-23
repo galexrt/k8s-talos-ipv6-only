@@ -1,0 +1,3 @@
+cluster_name = "mycool-k8s"
+
+# Be sure to checkout the `variables.tf` file for all available variables.
