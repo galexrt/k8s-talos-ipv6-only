@@ -10,6 +10,16 @@ Primarily uses the following services/software:
 - [Terraform](https://developer.hashicorp.com/terraform) - Infrastructure as Code (IaC)
 - [Talos Linux](https://www.talos.dev/) - Operating System, Kubernetes
 
+## Directories & Files
+
+- `packer/` - Packer configuration to build and upload Talos Linux image to Hetzner Cloud.
+- `patches/` - Patches for Talos Linux to enable IPv6-only support.
+- `values/` - Helm values for Cilium CNI and Talos Cloud Controller Manager (CCM).
+- `.env.example` - Example environment file to set Hetzner Cloud API token.
+- `terraform.tfvars.example` - Example Terraform variables file.
+- `Makefile` - Makefile with convenience commands (not required, but can be helpful).
+- `*.tf` - Terraform config/resource files.
+
 ## Requirements
 
 - Hetzner Cloud Account with write access API token to a project
